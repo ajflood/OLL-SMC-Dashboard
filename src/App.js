@@ -14,6 +14,7 @@ import EditStudent from './components/edit-student.component'
 import StudentList from './components/student-list.component'
 import Register from "./components/Register"
 import Login from "./components/Login"
+import Logout from "./components/Logout"
 import Home from "./components/Home"
 
 
@@ -35,6 +36,7 @@ function App() {
                 {!isLoggedIn && ( <Nav> <Link to={'/login'} className="nav-link"> Login </Link> </Nav>)}
                 {isLoggedIn && ( <Nav> <Link to={'/create-student'} className="nav-link"> Create Student </Link> </Nav> )}
                 {isLoggedIn && ( <Nav> <Link to={'/student-list'} className="nav-link"> Student List </Link> </Nav> )}
+                {isLoggedIn && ( <Nav> <Link to={'/logout'} className="nav-link"> Logout </Link> </Nav>)}
                 {/* && user.role === "Admin" */}
                 {/* && user.role === "Admin" */}
               </Nav>
@@ -48,6 +50,7 @@ function App() {
               <div className="wrapper">
                 <Switch>
                   <Route exact path="/login" component={Login} />
+                  <Route exact path="/logout" component={Logout} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/" component={Home} />
                   <Route

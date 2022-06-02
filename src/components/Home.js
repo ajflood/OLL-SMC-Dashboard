@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import axios from "axios"
 
 const Home = props => {
@@ -19,11 +20,11 @@ const Home = props => {
     getUser()
   }, [])
 
-  const logout = () => {
-    localStorage.removeItem("token")
-    window.location.reload(true)
-    props.history.push("/login")
-  }
+  // const logout = () => {
+  //   localStorage.removeItem("token")
+  //   window.location.reload(true)
+  //   props.history.push("/login")
+  // }
   
   if (!localStorage.getItem("token")) {
     props.history.push("/login")
@@ -32,7 +33,7 @@ const Home = props => {
   return (
     <div>
       <p>Welcome {user && user.name}</p>
-      <button onClick={logout}>Logout</button>
+      <Link to="/logout">Logout</Link>
     </div>
   )
 }
