@@ -101,10 +101,11 @@ export default class Register extends Component {
 	async onSubmit(e) {
 		e.preventDefault()
 		try {
-			axios.post('http://localhost:4000/users/register', this.state)
-				.then(res => console.log(res.data));
+			var res = await axios.post('http://localhost:4000/users/register', this.state)
 
 			this.setState({ name: '', email: '', password: '' })
+			this.props.history.push("/login")
+
 		} catch (err) {
 			console.log(err)
 		}

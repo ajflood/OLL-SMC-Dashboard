@@ -27,16 +27,13 @@ let userSchema = require('../models/User')
 router.route('/register').post(async (req, res, next) => {
 	console.log(req.body)
 	
-	// const email = req.body.email
-	// let user = await userSchema.findOne({ email })
-	// if (user) {
-	// 	// return res.status(400).json({ error: "User already exists" })
-	// 	// res.redirect('./login')
-	// 	res.json(data)
-	//   }
+	const email = req.body.email
+	let user = await userSchema.findOne({ email })
+	if (user) {
+		return res.json({ error: "User already exists" })
+	  }
 
 	const name = req.body.name
-	const email = req.body.email
 	const password = req.body.password 
 	const hashedPassword = await bcrypt.hash(password, 10);
 	
@@ -74,7 +71,6 @@ router.post("/login", async (req, res) => {
 	  const token = await jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
 		expiresIn: "1h",
 	  })
-	  console.log(token)
 	  res.json({ token: token })
 	} catch (err) {
 	  console.log(err)
