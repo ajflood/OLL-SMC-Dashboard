@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom"
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import StudentTableRow from './StudentTableRow';
@@ -33,20 +34,29 @@ export default class StudentList extends Component {
 
 
   render() {
-    return (<div className="table-wrapper">
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Roll No</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.DataTable()}
-        </tbody>
-      </Table>
-    </div>);
+    let html
+    if (localStorage.getItem("token")) {
+      html = <div className="table-wrapper">
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Roll No</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.DataTable()}
+          </tbody>
+        </Table>
+      </div>
+      } else {
+        html = <div>
+            <p> Please login</p>
+            <Link to="/login">Login</Link>
+          </div>
+      }
+      return (html);
   }
 }

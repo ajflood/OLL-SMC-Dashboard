@@ -79,8 +79,6 @@ export default class CreateStudent extends Component {
           <Link to="/login">Login</Link>
         </div>
     }
-    return (
-      html
-    );
+    return (html);
   }
 }
