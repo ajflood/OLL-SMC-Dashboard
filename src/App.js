@@ -6,15 +6,16 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "./App.css"
-import Register from "./components/Register"
-import Login from "./components/Login"
-import Home from "./components/Home"
 
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
 import CreateStudent from './components/create-student.component'
 import EditStudent from './components/edit-student.component'
 import StudentList from './components/student-list.component'
+import Register from "./components/Register"
+import Login from "./components/Login"
+import Home from "./components/Home"
+
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
           <Navbar bg="dark" variant="dark">
             <Container>
               <Navbar.Brand>
-                <Link to={'/create-student'} className="nav-link">
+                <Link to={'/'} className="nav-link">
                   React MERN Stack App
                 </Link>
               </Navbar.Brand>
@@ -53,11 +54,11 @@ function App() {
                 <Switch>
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/register" component={Register} />
-                  <Route exact path="/home" component={Home} />
+                  <Route exact path="/" component={Home} />
                   <Route
                     exact
                     path="/"
-                    component={(props) => <CreateStudent {...props} />}
+                    component={(props) => <Home {...props} />}
                   />
                   <Route
                     exact

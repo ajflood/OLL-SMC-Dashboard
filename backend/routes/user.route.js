@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const requireLogin = require("../middleware/auth")
+const { requireLogin } = require("../middleware/auth")
 
 let mongoose = require('mongoose'),
   express = require('express'),
@@ -25,8 +25,6 @@ let userSchema = require('../models/User')
 // })
 
 router.route('/register').post(async (req, res, next) => {
-	console.log(req.body)
-	
 	const email = req.body.email
 	let user = await userSchema.findOne({ email })
 	if (user) {
@@ -56,7 +54,6 @@ router.route('/register').post(async (req, res, next) => {
 
 // Login user
 router.post("/login", async (req, res) => {
-	
 	const email = req.body.email
 	const password = req.body.password
 	try {
@@ -77,14 +74,13 @@ router.post("/login", async (req, res) => {
 	}
   })
 
-// router.get("/", requireLogin, async (req, res) => {
-// 	console.log(req.user)
-// 	try {
-// 	  const user = await User.findById(req.user._id).select("-password")
-// 	  res.json(user)
-// 	} catch (err) {
-// 	  console.log(err)
-// 	}
-//   })
+router.get("/", requireLogin, async (req, res) => {
+	try {
+	  const user = await userSchema.findById(req.user._id).select("-password")
+	  res.json(user)
+	} catch (err) {
+	  console.log(err)
+	}
+  })
 
 module.exports = router

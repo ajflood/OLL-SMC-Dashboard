@@ -24,7 +24,6 @@ mongoose
 
 const app = express();
 app.use(express.json())
-app.use('/auth', require('../backend/routes/user.route'))
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({

@@ -13,5 +13,6 @@ exports.requireLogin = (req, res, next) => {
     }
   } catch (err) {
     console.log("Something went wrong")
+    return res.json({ error: "Unauthorized" })
   }
 }
