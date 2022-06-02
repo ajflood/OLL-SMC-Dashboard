@@ -12,7 +12,6 @@ exports.requireLogin = (req, res, next) => {
       return res.status(400).json({ error: "Unauthorized" })
     }
   } catch (err) {
-    console.log("Something went wrong")
     return res.json({ error: "Unauthorized" })
   }
 }

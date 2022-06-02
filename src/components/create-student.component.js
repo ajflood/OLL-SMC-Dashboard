@@ -1,8 +1,8 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom"
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-
 export default class CreateStudent extends Component {
 
   constructor(props) {
@@ -49,8 +49,9 @@ export default class CreateStudent extends Component {
   }
 
   render() {
-    return (
-    <div className="form-wrapper">
+    let html
+    if (localStorage.getItem("token")) {
+      html = <div className="form-wrapper">
       <Form onSubmit={this.onSubmit}>
         <Form.Group controlId="Name">
           <Form.Label>Name</Form.Label>
@@ -71,7 +72,15 @@ export default class CreateStudent extends Component {
           Create Student
         </Button>
       </Form>
-    </div>
+    </div>;
+    } else {
+      html = <div>
+          <p> Please login</p>
+          <Link to="/login">Login</Link>
+        </div>
+    }
+    return (
+      html
     );
   }
 }

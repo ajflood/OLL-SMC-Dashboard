@@ -7,23 +7,8 @@ let mongoose = require('mongoose'),
   router = express.Router()
 
 let userSchema = require('../models/User')
-// Register user
-// router.post("/register", async (req, res) => {
-//   const { name, email, password } = req.body
-//   try {
-//     let user = await User.findOne({ email })
-//     if (user) {
-//       return res.status(400).json({ error: "User already exists" })
-//     }
-//     const hashedPassword = await bcrypt.hash(password, 10)
-//     user = new User({ name, email, password: hashedPassword })
-//     await user.save()
-//     res.status(201).json({ message: "User created successfully" })
-//   } catch (err) {
-//     console.log(err)
-//   }
-// })
 
+// Register user
 router.route('/register').post(async (req, res, next) => {
 	const email = req.body.email
 	let user = await userSchema.findOne({ email })
@@ -74,6 +59,8 @@ router.post("/login", async (req, res) => {
 	}
   })
 
+
+// Home
 router.get("/", requireLogin, async (req, res) => {
 	try {
 	  const user = await userSchema.findById(req.user._id).select("-password")
