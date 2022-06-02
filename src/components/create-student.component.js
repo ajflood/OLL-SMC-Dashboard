@@ -49,7 +49,8 @@ export default class CreateStudent extends Component {
   }
 
   render() {
-    return (<div className="form-wrapper">
+    return (
+    <div className="form-wrapper">
       <Form onSubmit={this.onSubmit}>
         <Form.Group controlId="Name">
           <Form.Label>Name</Form.Label>
@@ -70,6 +71,7 @@ export default class CreateStudent extends Component {
           Create Student
         </Button>
       </Form>
-    </div>);
+    </div>
+    );
   }
 }

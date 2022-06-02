@@ -5,7 +5,10 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './App.css'
+import "./App.css"
+import Register from "./components/Register"
+import Login from "./components/Login"
+import Home from "./components/Home"
 
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
@@ -48,6 +51,9 @@ function App() {
             <Col md={12}>
               <div className="wrapper">
                 <Switch>
+                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/register" component={Register} />
+                  <Route exact path="/home" component={Home} />
                   <Route
                     exact
                     path="/"
