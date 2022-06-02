@@ -21,6 +21,7 @@ const Home = props => {
 
   const logout = () => {
     localStorage.removeItem("token")
+    window.location.reload(true)
     props.history.push("/login")
   }
   

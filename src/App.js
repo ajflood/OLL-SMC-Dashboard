@@ -18,6 +18,9 @@ import Home from "./components/Home"
 
 
 function App() {
+  const isLoggedIn = localStorage.getItem("token")
+  console.log(isLoggedIn)
+
   return (
     <div className="App">
       <Router>
@@ -25,23 +28,15 @@ function App() {
           <Navbar bg="dark" variant="dark">
             <Container>
               <Navbar.Brand>
-                <Link to={'/'} className="nav-link">
-                  React MERN Stack App
-                </Link>
+                <Link to={'/'} className="nav-link"> OLL SMC Stuffs and Things </Link>
               </Navbar.Brand>
 
               <Nav className="justify-content-end">
-                <Nav>
-                  <Link to={'/create-student'} className="nav-link">
-                    Create Student
-                  </Link>
-                </Nav>
-
-                <Nav>
-                  <Link to={'/student-list'} className="nav-link">
-                    Student List
-                  </Link>
-                </Nav>
+                {!isLoggedIn && ( <Nav> <Link to={'/login'} className="nav-link"> Login </Link> </Nav>)}
+                {isLoggedIn && ( <Nav> <Link to={'/create-student'} className="nav-link"> Create Student </Link> </Nav> )}
+                {isLoggedIn && ( <Nav> <Link to={'/student-list'} className="nav-link"> Student List </Link> </Nav> )}
+                {/* && user.role === "Admin" */}
+                {/* && user.role === "Admin" */}
               </Nav>
             </Container>
           </Navbar>

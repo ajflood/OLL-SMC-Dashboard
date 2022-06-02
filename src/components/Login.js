@@ -93,7 +93,8 @@ export default class Register extends Component {
 
       localStorage.setItem("token", res.data.token)
       this.setState({ email: '', password: '' })
-      this.props.history.push("/")
+      window.location.reload(true)
+	  this.props.history.push("/")
 		} catch (err) {
 			console.log(err)
 		}
