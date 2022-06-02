@@ -99,25 +99,21 @@ export default class Register extends Component {
 	}
   
 	async onSubmit(e) {
-	  e.preventDefault()
-	
-	  const hashedPassword = await bcrypt.hash(this.state.password, 10);
-	  console.log(hashedPassword)
+		e.preventDefault()
+		try {
+			axios.post('http://localhost:4000/users/register', this.state)
+				.then(res => console.log(res.data));
 
-	  const userObject = {
-		name: this.state.name,
-		email: this.state.email,
-		password: hashedPassword
-	  };
-	  axios.post('http://localhost:4000/users/register', userObject)
-		.then(res => console.log(res.data));
-  
-	  this.setState({ name: '', email: '', password: '' })
+			this.setState({ name: '', email: '', password: '' })
+		} catch (err) {
+			console.log(err)
+		}
 	}
-  
+
 	render() {
 	  return (
 	  <div className="form-wrapper">
+		<h4>Register</h4>
 		<Form onSubmit={this.onSubmit}>
 		  <Form.Group controlId="Name">
 			<Form.Label>Name</Form.Label>
@@ -129,7 +125,7 @@ export default class Register extends Component {
 			<Form.Control type="email" value={this.state.email} onChange={this.onChangeEmail} />
 		  </Form.Group>
   
-		  <Form.Group controlId="Name">
+		  <Form.Group controlId="Password">
 			<Form.Label>Password</Form.Label>
 			<Form.Control type="text" value={this.state.password} onChange={this.onChangePassword} />
 		  </Form.Group>
