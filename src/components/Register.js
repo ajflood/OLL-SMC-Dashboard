@@ -5,6 +5,8 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
+const bcrypt = require("bcryptjs")
+
 // const Register = () => {
 //   const [data, setData] = useState({
 //     name: "",
@@ -96,18 +98,21 @@ export default class Register extends Component {
 	  this.setState({ password: e.target.value })
 	}
   
-	onSubmit(e) {
+	async onSubmit(e) {
 	  e.preventDefault()
-  
+	
+	  const hashedPassword = await bcrypt.hash(this.state.password, 10);
+	  console.log(hashedPassword)
+
 	  const userObject = {
 		name: this.state.name,
 		email: this.state.email,
-		rollno: this.state.password
+		password: hashedPassword
 	  };
 	  axios.post('http://localhost:4000/users/register', userObject)
 		.then(res => console.log(res.data));
   
-	  this.setState({ name: '', email: '', rollno: '' })
+	  this.setState({ name: '', email: '', password: '' })
 	}
   
 	render() {
