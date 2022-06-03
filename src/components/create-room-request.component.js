@@ -9,7 +9,7 @@ import DatePicker from 'react-date-picker';
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import "react-big-calendar/lib/css/react-big-calendar.css";
-
+import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 
 export default class CreateRoomRequest extends Component {
 
@@ -29,12 +29,12 @@ export default class CreateRoomRequest extends Component {
       name: '',
       room: '',
       attendance: '',
-      date: new Date()
+      date: new Date(),
+      view: 'week',
+      defaultView: "week",
+      defaultDate: new Date(),
     }
   }
-
-  // componentDidMount() {
-  // }
 
   OptionList() {
     return this.state.rooms.map((option) => {
@@ -42,23 +42,72 @@ export default class CreateRoomRequest extends Component {
     })
   }
 
+  GetCalendarEvents() {
+
+  }
+
+  handleCalendarSelect = (event, e) => {
+    console.log("done selecting")
+    console.log(event)
+    const { start, end } = event;
+    const data = { title: '', subject: '', start, end, allDay: false };
+
+    if (event.action == "select") {
+      console.log("selected")
+    }
+    // setShowAddModal(true);
+    // setShowEditModal(false);
+    // setCalendarEvent(data);
+  };
+
   Scheduler() {
     console.log("hi there")
     const date = this.state.date.toString()
     console.log(date)
     const localizer = momentLocalizer(moment)
     console.log(localizer)
+    const DnDCalendar = withDragAndDrop(Calendar);
 
-    return <div className="myCustomHeight">
-            <Calendar
-              localizer={localizer}
-              // events={}
-              startAccessor="start"
-              endAccessor="end"
-              defaultView="day"
-              views={["month", "day"]}
-            />
-          </div>
+
+    return <DnDCalendar
+          localizer={localizer}
+          selectable={true}
+          // events={calendarStore.calendarEvents}
+          startAccessor="start"
+          endAccessor="end"
+          defaultView="month"
+          // defaultDate={ this.defaultDate}
+          // selectable={true}
+          // resizable={true}
+          // onEventDrop={handleDragEvent}
+          style={{ height: '70vh' }}
+          onSelectSlot={this.handleCalendarSelect}
+          // onSelectEvent={handleSelectEvent}
+          // min={
+          //   new Date(today.getFullYear(), today.getMonth(), today.getDate(), 8)
+          // }
+          // max={
+          //   new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23)
+          // }
+          // messages={{
+          //   month: 'mois',
+          //   week: 'semaine',
+          //   day: 'jour',
+          //   today: "aujourd'hui",
+          //   next: 'suiv.',
+          //   previous: 'préc.',
+          // }}
+          // resource="Test ressource"
+          // views={['month']}
+          views={['month', 'week', 'day']}
+          eventPropGetter={(event) => ({
+            style: {
+              backgroundColor: event.isDone === true ? '#ad4ca4' : '#3174ad',
+            },
+          })}
+          />
+
+
   }
 
   onChangeName(e) {
