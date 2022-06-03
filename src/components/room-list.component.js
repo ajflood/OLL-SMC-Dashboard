@@ -29,7 +29,6 @@ export default class RoomList extends Component {
 
   DataTable() {
     return this.state.users.map((res, i) => {
-      console.log(res)
       return <RoomTableRow obj={res} key={i} />;
     });
   }

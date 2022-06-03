@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import axios from "axios"
 
+import CreateRoomRequest from './create-room-request.component'
+
 const Home = props => {
   const [user, setUser] = useState(null)
  
@@ -26,6 +28,7 @@ const Home = props => {
   
   return (
     <div>
+      <CreateRoomRequest />
       <p>Welcome {user && user.name}</p>
       <Link to="/logout">Logout</Link>
     </div>
