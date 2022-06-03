@@ -10,6 +10,9 @@ const userSchema = new mongoose.Schema(
 		enum: ["Admin", "Basic"],
 		default: "Basic", 
 		},
+	bm: {type: Boolean, default: false,},
+	hvac: {type: Boolean, default: false,},
+	keys: {type: Boolean, default: false,},
 	},
  	{ timestamps: true }
 )

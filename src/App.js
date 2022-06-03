@@ -17,6 +17,8 @@ import Register from "./components/Register"
 import Login from "./components/Login"
 import Logout from "./components/Logout"
 import Home from "./components/Home"
+import UserList from './components/user-list.component'
+import EditUser from './components/edit-user.component'
 
 
 function App(async) {
@@ -39,7 +41,6 @@ function App(async) {
     getUser()
   }, [])
 
-  console.log(user && user.type)
   return (
     <div className="App">
       <Router>
@@ -47,13 +48,14 @@ function App(async) {
           <Navbar bg="dark" variant="dark">
             <Container>
               <Navbar.Brand>
-                <Link to={'/'} className="nav-link"> OLL SMC Stuffs and Things </Link>
+                <Link to={'/'} className="nav-link"> OLL SMC </Link>
               </Navbar.Brand>
 
               <Nav className="justify-content-end">
                 {!isLoggedIn && ( <Nav> <Link to={'/login'} className="nav-link"> Login </Link> </Nav>)}
                 {isLoggedIn && user &&  ["Basic", "Admin"].includes(user.type) && ( <Nav> <Link to={'/create-student'} className="nav-link"> Create Student </Link> </Nav> )}
                 {isLoggedIn && user && ["Admin"].includes(user.type) && ( <Nav> <Link to={'/student-list'} className="nav-link"> Student List </Link> </Nav> )}
+                {isLoggedIn && user && ["Admin"].includes(user.type) && ( <Nav> <Link to={'/user-list'} className="nav-link"> User List </Link> </Nav> )}
                 {isLoggedIn && ( <Nav> <Link to={'/logout'} className="nav-link"> Logout </Link> </Nav>)}
               </Nav>
             </Container>
@@ -88,6 +90,16 @@ function App(async) {
                     exact
                     path="/student-list"
                     component={(props) => <StudentList {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/user-list"
+                    component={(props) => <UserList {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/edit-user/:id"
+                    component={(props) => <EditUser {...props} />}
                   />
                 </Switch>
               </div>
