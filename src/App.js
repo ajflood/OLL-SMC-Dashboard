@@ -13,12 +13,18 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import CreateStudent from './components/create-student.component'
 import EditStudent from './components/edit-student.component'
 import StudentList from './components/student-list.component'
+
 import Register from "./components/Register"
 import Login from "./components/Login"
 import Logout from "./components/Logout"
 import Home from "./components/Home"
+
 import UserList from './components/user-list.component'
 import EditUser from './components/edit-user.component'
+
+import RoomList from './components/room-list.component'
+import CreateRoom from './components/create-room.component'
+import EditRoom from './components/edit-room.component'
 
 
 function App(async) {
@@ -53,7 +59,8 @@ function App(async) {
 
               <Nav className="justify-content-end">
                 {!isLoggedIn && ( <Nav> <Link to={'/login'} className="nav-link"> Login </Link> </Nav>)}
-                {isLoggedIn && user && ["Admin"].includes(user.type) && ( <Nav> <Link to={'/user-list'} className="nav-link"> User List </Link> </Nav> )}
+                {isLoggedIn && user && ["Admin"].includes(user.type) && ( <Nav> <Link to={'/user-list'} className="nav-link"> Users </Link> </Nav> )}
+                {isLoggedIn && user && ["Admin"].includes(user.type) && ( <Nav> <Link to={'/room-list'} className="nav-link"> Rooms </Link> </Nav> )}
                 {isLoggedIn && ( <Nav> <Link to={'/logout'} className="nav-link"> Logout </Link> </Nav>)}
               </Nav>
             </Container>
@@ -74,6 +81,7 @@ function App(async) {
                     path="/"
                     component={(props) => <Home {...props} />}
                   />
+                  
                   <Route
                     exact
                     path="/create-student"
@@ -89,6 +97,7 @@ function App(async) {
                     path="/student-list"
                     component={(props) => <StudentList {...props} />}
                   />
+                  
                   <Route
                     exact
                     path="/user-list"
@@ -99,6 +108,23 @@ function App(async) {
                     path="/edit-user/:id"
                     component={(props) => <EditUser {...props} />}
                   />
+                  
+                  <Route
+                    exact
+                    path="/room-list"
+                    component={(props) => <RoomList {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/create-room"
+                    component={(props) => <CreateRoom {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/edit-room/:id"
+                    component={(props) => <EditRoom {...props} />}
+                  />
+
                 </Switch>
               </div>
             </Col>

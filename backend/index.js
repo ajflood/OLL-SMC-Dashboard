@@ -11,6 +11,7 @@ const requireLogin = require("../backend/middleware/auth")
 // Express Route
 const studentRoute = require('../backend/routes/student.route')
 const userRoute = require('../backend/routes/user.route')
+const roomRoute = require('../backend/routes/room.route')
 
 // Connecting mongoDB Database
 mongoose
@@ -32,6 +33,7 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 app.use('/students', studentRoute)
 app.use('/users', userRoute)
+app.use('/room', roomRoute)
 
 // PORT
 const port = process.env.PORT || 4000;
