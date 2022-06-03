@@ -5,8 +5,6 @@ import axios from "axios"
 const Logout = props => {
 
   localStorage.removeItem("token")
-  // window.location.reload(true)
-
   return (
     <div>
       <p>You are logged out</p>

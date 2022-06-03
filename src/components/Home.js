@@ -19,12 +19,6 @@ const Home = props => {
   useEffect(() => {
     getUser()
   }, [])
-
-  // const logout = () => {
-  //   localStorage.removeItem("token")
-  //   window.location.reload(true)
-  //   props.history.push("/login")
-  // }
   
   if (!localStorage.getItem("token")) {
     props.history.push("/login")

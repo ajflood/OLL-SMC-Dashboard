@@ -53,8 +53,6 @@ function App(async) {
 
               <Nav className="justify-content-end">
                 {!isLoggedIn && ( <Nav> <Link to={'/login'} className="nav-link"> Login </Link> </Nav>)}
-                {isLoggedIn && user &&  ["Basic", "Admin"].includes(user.type) && ( <Nav> <Link to={'/create-student'} className="nav-link"> Create Student </Link> </Nav> )}
-                {isLoggedIn && user && ["Admin"].includes(user.type) && ( <Nav> <Link to={'/student-list'} className="nav-link"> Student List </Link> </Nav> )}
                 {isLoggedIn && user && ["Admin"].includes(user.type) && ( <Nav> <Link to={'/user-list'} className="nav-link"> User List </Link> </Nav> )}
                 {isLoggedIn && ( <Nav> <Link to={'/logout'} className="nav-link"> Logout </Link> </Nav>)}
               </Nav>
