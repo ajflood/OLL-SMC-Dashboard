@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 var moment = require('moment');
 
-const roomRequestSchema = new mongoose.Schema(
+const eventSchema = new mongoose.Schema(
 	{
 		name: { type: String },
 		attendance: { type: Number },
@@ -22,4 +22,4 @@ const roomRequestSchema = new mongoose.Schema(
  	{ timestamps: true }
 )
 
-module.exports = mongoose.model('RoomRequest', roomRequestSchema)
+module.exports = mongoose.model('Event', eventSchema)

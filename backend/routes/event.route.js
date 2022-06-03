@@ -2,10 +2,10 @@ let mongoose = require('mongoose'),
   express = require('express'),
   router = express.Router()
 
-let roomRequestSchema = require('../models/RoomRequest')
+let eventSchema = require('../models/Event')
 
-router.route('/create-request').post((req, res, next) => {
-  roomRequestSchema.create(req.body, (error, data) => {
+router.route('/create-event').post((req, res, next) => {
+  eventSchema.create(req.body, (error, data) => {
     if (error) {
       return next(error)
     } else {
@@ -16,7 +16,7 @@ router.route('/create-request').post((req, res, next) => {
 })
 
 router.route('/find').get((req, res) => {
-  roomRequestSchema.find((error, data) => {
+  eventSchema.find((error, data) => {
     if (error) {
       return next(error)
     } else {
@@ -25,8 +25,8 @@ router.route('/find').get((req, res) => {
   })
 })
 
-router.route('/edit-request/:id').get((req, res) => {
-  roomRequestSchema.findById(req.params.id, (error, data) => {
+router.route('/edit-event/:id').get((req, res) => {
+  eventSchema.findById(req.params.id, (error, data) => {
     if (error) {
       return next(error)
     } else {
@@ -36,8 +36,8 @@ router.route('/edit-request/:id').get((req, res) => {
 })
 
 // Update Student
-router.route('/update-request/:id').put((req, res, next) => {
-  roomRequestSchema.findByIdAndUpdate(
+router.route('/update-event/:id').put((req, res, next) => {
+  eventSchema.findByIdAndUpdate(
     req.params.id,
     {
       $set: req.body,
@@ -55,8 +55,8 @@ router.route('/update-request/:id').put((req, res, next) => {
 })
 
 // Delete room
-router.route('/delete-request/:id').delete((req, res, next) => {
-  roomRequestSchema.findByIdAndRemove(req.params.id, (error, data) => {
+router.route('/delete-event/:id').delete((req, res, next) => {
+  eventSchema.findByIdAndRemove(req.params.id, (error, data) => {
     if (error) {
       return next(error)
     } else {

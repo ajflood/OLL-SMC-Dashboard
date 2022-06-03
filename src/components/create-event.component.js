@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import DatePicker from 'react-date-picker';
 
+import dates from 'react-big-calendar/lib/utils/dates';
 
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
@@ -20,7 +21,7 @@ export default class CreateRoomRequest extends Component {
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeAttendance = this.onChangeAttendance.bind(this);
     this.onChangeRoom = this.onChangeRoom.bind(this);
-    this.onChangeDate = this.onChangeDate.bind(this);
+    // this.onChangeDate = this.onChangeDate.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     // Setting up state
@@ -29,10 +30,8 @@ export default class CreateRoomRequest extends Component {
       name: '',
       room: '',
       attendance: '',
-      date: new Date(),
-      view: 'week',
-      defaultView: "week",
-      defaultDate: new Date(),
+      // date: new Date(),
+      events: [],
     }
   }
 
@@ -42,7 +41,32 @@ export default class CreateRoomRequest extends Component {
     })
   }
 
-  GetCalendarEvents() {
+  GetCalendarEvents(date, view) {
+    console.log("Hi from events")
+    console.log(date)
+    console.log(view)
+
+    let start, end;
+    start = moment(date).startOf('month')._d
+    end = moment(date).endOf('month')._d
+
+    console.log(start, end)
+    // console.log(dates.firstVisibleDay(date), dates.lastVisibleDay(date));
+
+    axios.get('http://localhost:4000/event/find')
+      .then(res => {
+        console.log(res.data)
+        
+        var events = res.data.filter(item => item.room === this.state.room).filter(item => item.startTime < start).filter(item => item.endTime > end)
+        
+        this.setState({
+          events: events
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+
 
   }
 
@@ -61,18 +85,18 @@ export default class CreateRoomRequest extends Component {
   };
 
   Scheduler() {
-    console.log("hi there")
-    const date = this.state.date.toString()
-    console.log(date)
+    // console.log("hi there")
+    // const date = this.state.date.toString()
+    // console.log(date)
     const localizer = momentLocalizer(moment)
-    console.log(localizer)
+    // console.log(localizer)
     const DnDCalendar = withDragAndDrop(Calendar);
 
 
     return <DnDCalendar
           localizer={localizer}
           selectable={true}
-          // events={calendarStore.calendarEvents}
+          events={this.state.events}
           startAccessor="start"
           endAccessor="end"
           defaultView="month"
@@ -82,6 +106,8 @@ export default class CreateRoomRequest extends Component {
           // onEventDrop={handleDragEvent}
           style={{ height: '70vh' }}
           onSelectSlot={this.handleCalendarSelect}
+          onNavigate={this.GetCalendarEvents}
+          // onView={this.GetCalendarEvents}
           // onSelectEvent={handleSelectEvent}
           // min={
           //   new Date(today.getFullYear(), today.getMonth(), today.getDate(), 8)
@@ -132,9 +158,9 @@ export default class CreateRoomRequest extends Component {
     this.setState({ room: e.target.value })
   }
 
-  onChangeDate(e) {
-    this.setState({ date: e })
-  }
+  // onChangeDate(e) {
+  //   this.setState({ date: e })
+  // }
 
   onSubmit(e) {
     e.preventDefault()
