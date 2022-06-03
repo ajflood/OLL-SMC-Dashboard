@@ -6,6 +6,11 @@ import axios from 'axios';
 import DatePicker from 'react-date-picker';
 
 
+import { Calendar, momentLocalizer } from 'react-big-calendar'
+import moment from 'moment'
+import "react-big-calendar/lib/css/react-big-calendar.css";
+
+
 export default class CreateRoomRequest extends Component {
 
   constructor(props) {
@@ -28,17 +33,8 @@ export default class CreateRoomRequest extends Component {
     }
   }
 
-  componentDidMount() {
-    axios.get('http://localhost:4000/room/find')
-      .then(res => {
-        this.setState({
-          rooms: res.data
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  }
+  // componentDidMount() {
+  // }
 
   OptionList() {
     return this.state.rooms.map((option) => {
@@ -46,11 +42,40 @@ export default class CreateRoomRequest extends Component {
     })
   }
 
+  Scheduler() {
+    console.log("hi there")
+    const date = this.state.date.toString()
+    console.log(date)
+    const localizer = momentLocalizer(moment)
+    console.log(localizer)
+
+    return <div className="myCustomHeight">
+            <Calendar
+              localizer={localizer}
+              // events={}
+              startAccessor="start"
+              endAccessor="end"
+              defaultView="day"
+              views={["month", "day"]}
+            />
+          </div>
+  }
+
   onChangeName(e) {
     this.setState({ name: e.target.value })
   }
 
   onChangeAttendance(e) {
+    axios.get('http://localhost:4000/room/find')
+      .then(res => {
+        this.setState({
+          rooms: res.data.filter(item => item.occupancy > this.state.attendance)
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+
     this.setState({ attendance: e.target.value })
   }
 
@@ -59,7 +84,6 @@ export default class CreateRoomRequest extends Component {
   }
 
   onChangeDate(e) {
-    console.log(e)
     this.setState({ date: e })
   }
 
@@ -87,6 +111,11 @@ export default class CreateRoomRequest extends Component {
           <Form.Control type="text" value={this.state.name} onChange={this.onChangeName} />
         </Form.Group>
 
+        <Form.Group controlId="Attendance">
+          <Form.Label>Attendance</Form.Label>
+          <Form.Control type="text" value={this.state.attendance} onChange={this.onChangeAttendance} />
+        </Form.Group>
+
         <Form.Group controlId="Room">
         <Form.Label>Room</Form.Label>
           <Form.Select id="disabledSelect" onChange={this.onChangeRoom}>
@@ -94,16 +123,15 @@ export default class CreateRoomRequest extends Component {
           </Form.Select>
         </Form.Group>
 
-        <Form.Group controlId="Attendance">
-          <Form.Label>Attendance</Form.Label>
-          <Form.Control type="text" value={this.state.attendance} onChange={this.onChangeAttendance} />
-        </Form.Group>
-
-        <div>
+        {/* <div>
           Event date 
           <DatePicker calendarType="US" onChange={this.onChangeDate} value={this.state.date} />
-        </div>
+        </div> */}
 
+        <div>
+          {this.Scheduler()}
+        </div>
+        
         <Button variant="danger" size="lg" block="block" type="submit" className="mt-4">
           Submit Room Request
         </Button>
